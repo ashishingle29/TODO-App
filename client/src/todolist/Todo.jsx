@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import "./Todo.scss";
 import { IonIcon } from "@ionic/react";
-import { checkmark, close } from "ionicons/icons";
+import {
+  chevronUpOutline, chevronDownOutline, close } from "ionicons/icons";
 import axios from "axios";
 
 export default function Todo() {
@@ -9,10 +10,13 @@ export default function Todo() {
   const [id, setId] = useState(null);
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
+  const [isHidden, setIsHidden] = useState(false);
+  const [rightDivStyle, setRightDivStyle] = useState({})
+  const [allTasksStyle, setAllTasksStyle] = useState({});
 
 
-  // const BASE_URL = "http://localhost:5000"
-  const BASE_URL = "https://todo-app-ten-tau-44.vercel.app";
+  const BASE_URL = "http://localhost:5000"
+  // const BASE_URL = "https://what-to-do-bro.vercel.app";
 
 
   const options = [
@@ -22,6 +26,20 @@ export default function Todo() {
   ];
   const [searchCategory, setSearchCategory] = useState(options[0].value);
 
+
+
+  function hide() {
+    if (isHidden) {
+      setIsHidden(false);
+      setRightDivStyle({})
+      setAllTasksStyle({})
+    } else {
+      setIsHidden(true);
+      setRightDivStyle({ width: "100%" })
+      setAllTasksStyle({
+       })
+    }
+  }
 
   const handleChange = event => {
     console.log(event.target.value);
@@ -87,8 +105,10 @@ export default function Todo() {
       });
   }
 
+
+
   function updateCategory(id, Category) {
-  
+
     console.log(id, Category)
     axios
       .put(`${BASE_URL}/update/${id}/${Category}`)
@@ -102,11 +122,81 @@ export default function Todo() {
 
   }
 
+  
+
+
+
   if (data) {
+    let completedTasks = 0;
+    let unCompletedTasks = 0;
+    for (let i = 0; i < data.length; i++) {
+      if (data[i].category === 'Completed') {
+        completedTasks++
+      }
+      if (data[i].category === 'Uncompleted') {
+        unCompletedTasks++
+      }
+    }
+
     return (
       <div className="task_components">
-        <div className="taskCard taskCard__secondary">
-          <h1>Tasks</h1>
+        
+        { !isHidden &&
+
+          <div className="leftDiv">
+            <h1>Create Tasks</h1>
+
+            <div className="addTask addTask__secondary">
+              <form method="post" onSubmit={addTask}>
+                <div className="inputdiv">
+                  <textarea
+                    rows="2"
+                    type="textarea"
+                    className="inputs1"
+                    placeholder=" Title"
+                    required
+                    onChange={(event) => setTitle(event.target.value)}
+                  ></textarea>
+                  <textarea
+                    rows="3"
+                    type="textarea"
+                    className="inputs2"
+                    placeholder=" Description"
+                    required
+                    onChange={(event) => setContent(event.target.value)}
+                  ></textarea>
+                </div>
+                <button type="submit">+</button>
+              </form>
+            </div>
+            <div className="taskStatus">
+              <div className="statusLeft">
+                <p>Total Task</p>
+                <p>Completed Task</p>
+                <p>Uncompleted Task</p>
+              </div>
+              <div className="statusRight">
+                <p>{data.length}</p>
+                <p>{completedTasks}</p>
+                <p>{unCompletedTasks}</p>
+              </div>
+            </div>
+          </div>
+        }
+
+
+        <div className="right_left" onClick={hide}>
+          {isHidden ? (
+            <IonIcon icon={chevronDownOutline} />
+            
+          ) : (
+            <IonIcon icon={chevronUpOutline} />
+          )}
+        </div>
+
+        <div className="rightDiv" style={rightDivStyle}>
+
+          {/* Search */}
           <div className="dropSelect">
             <select value={searchCategory} onChange={handleChange}>
               {options.map(option => (
@@ -117,64 +207,41 @@ export default function Todo() {
             </select>
           </div>
 
+          <div className="allTask" style={allTasksStyle}>
+            {/* Tasks List  */}
+            {data.map((element, i) => {
+              return (
+                <div key={i} className="taskItem taskItem__secondary">
+                  <div className="cross">
 
-          {/* Add Task Button */}
-          <div className="addTask addTask__secondary">
-            <form method="post" onSubmit={addTask}>
-              <div id="pending">
-                <textarea
-                  rows="2"
-                  type="textarea"
-                  className="inputs1"
-                  placeholder=" Title"
-                  required
-                  onChange={(event) => setTitle(event.target.value)}
-                ></textarea>
-                <textarea
-                  rows="3"
-                  type="textarea"
-                  className="inputs2"
-                  placeholder=" Description"
-                  required
-                  onChange={(event) => setContent(event.target.value)}
-                ></textarea>
-              </div>
-              <button type="submit">+</button>
-            </form>
-          </div>
+                    {
+                      element.category === 'Completed' ?
+                        (
 
-          {/* Tasks List */}
-          {data.map((element, i) => {
-            return (
-              <div key={i} className="taskItem taskItem__secondary">
-                <div className="cross">
-
-                  {
-                    element.category === 'Completed' ?
-                      (
-
-                        <div className="doneButton" style={{ background: "rgb(105, 197, 83)" }} onClick={() => updateCategory(element._id, element.category)}>
-                          <div className="x" style={{ background: "#E4EBF5" }}></div>
-                          <div className="y" style={{ background: "#E4EBF5" }}></div>
-                        </div>
-                      ) : (
-                        <div className="doneButton" onClick={() => updateCategory(element._id, element.category)}>
-                          <div className="x" ></div>
-                          <div className="y" ></div>
-                        </div>
-                      )
-                  }
-                  <div className="crossButton" onClick={() => deletePending(element._id)}>
-                    <IonIcon icon={close} />
+                          <div className="doneButton" style={{ background: "rgb(105, 197, 83)" }} onClick={() => updateCategory(element._id, element.category)}>
+                            <div className="x" style={{ background: "#E4EBF5" }}></div>
+                            <div className="y" style={{ background: "#E4EBF5" }}></div>
+                          </div>
+                        ) : (
+                          <div className="doneButton" onClick={() => updateCategory(element._id, element.category)}>
+                            <div className="x" ></div>
+                            <div className="y" ></div>
+                          </div>
+                        )
+                    }
+                    <div className="crossButton" onClick={() => deletePending(element._id)}>
+                      <IonIcon icon={close} />
+                    </div>
+                  </div>
+                  <div className="text">
+                    <h2>{element.title}</h2>
+                    <p>{element.content}</p>
                   </div>
                 </div>
-                <div className="text">
-                  <h2>{element.title}</h2>
-                  <p>{element.content}</p>
-                </div>
-              </div>
-            );
-          })}
+              );
+            })}
+          </div>
+
         </div>
       </div>
     );

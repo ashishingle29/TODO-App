@@ -28,12 +28,14 @@ $inner-shadow: inset .2rem .2rem .5rem var(--greyLight-2),
   box-sizing: inherit;
 }
 
-html {
+html, body {
   box-sizing: border-box;
   font-size: 62.5%; // 1rem = 10px    100% = 16px
-  overflow-y: scroll;
+  // overflow-y: scroll;
   background: var(--greyLight-1);
-  overflow-x: scroll;
+  // overflow-x: scroll;
+
+  height: 100vh;
 
   @media screen and (min-width: 900px) {
     font-size: 75%;
@@ -51,9 +53,10 @@ html {
 }
 
 .container {
-  min-height: 100vh;
+  height:fit-content;
   padding: 1rem;
   display: flex;
+  overflow: hidden;
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
