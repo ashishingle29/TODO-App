@@ -46,7 +46,7 @@ export default function Todo() {
           WELCOME 2 TO DO{" "}
           <NavLink
             target="_blank"
-            to="https://github.com/tathagatamishra/ToDoApp"
+            to="https://github.com/ashishingle29/TODO-App.git"
             className="git"
           >
             <IonIcon icon={logoGithub} />
