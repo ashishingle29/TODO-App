@@ -12,7 +12,7 @@ export default function Todo() {
 
 
   // const BASE_URL = "http://localhost:5000"
-  const BASE_URL = "https://todo-app-ten-tau-44.vercel.app/";
+  const BASE_URL = "https://todo-app-ten-tau-44.vercel.app";
 
 
   const options = [

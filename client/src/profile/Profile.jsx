@@ -24,7 +24,7 @@ export default function Profile() {
   const navigate = useNavigate();
 
   // const BASE_URL = "http://localhost:5000";
-  const BASE_URL = "https://todo-app-ten-tau-44.vercel.app/";
+  const BASE_URL = "https://todo-app-ten-tau-44.vercel.app";
 
   useEffect(() => {
     let id = localStorage.getItem("user-id");
