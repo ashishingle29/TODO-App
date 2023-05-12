@@ -1,0 +1,62 @@
+@import url('https://fonts.googleapis.com/css2?family=Secular+One&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Alegreya+Sans+SC:wght@400;500&family=Lexend&family=Sen:wght@700&family=Staatliches&family=Viga&display=swap');
+
+
+:root {
+  --primary-light: #8abdff;
+  --primary: #6d5dfc;
+  --primary-dark: #5b0eeb;
+
+  --white: #FFFFFF;
+  --greyLight-1: #E4EBF5;
+  --greyLight-2: #c8d0e7;
+  --greyLight-3: #bec8e4;
+  --greyDark: #9baacf;
+  --greyDark-2: #737d97;
+}
+
+$shadow: .3rem .3rem .6rem var(--greyLight-2),
+  -.2rem -.2rem .5rem var(--white);
+$inner-shadow: inset .2rem .2rem .5rem var(--greyLight-2),
+  inset -.2rem -.2rem .5rem var(--white);
+
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: inherit;
+}
+
+html {
+  box-sizing: border-box;
+  font-size: 62.5%; // 1rem = 10px    100% = 16px
+  overflow-y: scroll;
+  background: var(--greyLight-1);
+  overflow-x: scroll;
+
+  @media screen and (min-width: 900px) {
+    font-size: 75%;
+  }
+
+  &::-webkit-scrollbar {
+    width: 5px;
+    height: 5px;
+  }
+
+  /* Handle */
+  &::-webkit-scrollbar-thumb {
+    background: var(--primary-light);
+  }
+}
+
+.container {
+  min-height: 100vh;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  font-family: 'Poppins', sans-serif;
+  background: var(--greyLight-1);
+}
