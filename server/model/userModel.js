@@ -7,7 +7,8 @@ module.exports = mongoose.model(
     {
       name: String,
       email: String,
-      password: String
+      password: String,
+      mobile: String
     },
     { timestamps: true }
   )

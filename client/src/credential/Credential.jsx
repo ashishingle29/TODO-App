@@ -67,7 +67,7 @@ export default function Credential() {
         if (res.data.status) {
           event.target.reset();
           setWarning(warningStyle);
-          
+
           localStorage.setItem("user-id", res.data.data);
           navigate(`/profile`);
         } else {
@@ -89,18 +89,20 @@ export default function Credential() {
     let credential = {
       name: event.target[0].value,
       email: event.target[1].value,
-      password: event.target[2].value,
+      mobile: event.target[2].value,
+      password: event.target[3].value,
     };
 
-    console.log(credential);
-
+    // console.log(credential);
+    
     axios
-      .post(`${BASE_URL}/signup`, credential)
-      .then((res) => {
-        if (res.data.status) {
-          event.target.reset();
-          setWarning(warningStyle);
-
+    .post(`${BASE_URL}/signup`, credential)
+    .then((res) => {
+      if (res.data.status) {
+        event.target.reset();
+        setWarning(warningStyle);
+        
+        
           // after signUp opening logIn form by passing argument 1 in showOnClick
           showOnClick(1);
         } else {
@@ -185,11 +187,15 @@ export default function Credential() {
 
             <label htmlFor="">Name</label>
             <input className="normalInput" type="text" required />
+
             <label htmlFor="">Email</label>
             <input className="normalInput" type="email" required />
             <p style={warning}>⦿ This email already in use</p>
-            <label htmlFor="">Password</label>
 
+            <label htmlFor="">Mobile No.</label>
+            <input className="normalInput" type="tel" required />
+
+            <label htmlFor="">Password</label>
             <div className="password__eye">
               <input className="passInput" type={type} required />
               <IonIcon

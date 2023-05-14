@@ -17,9 +17,8 @@ export default function Profile() {
   const [id, setId] = useState(null);
   const [task, setTask] = useState([]);
   const [isHidden, setIsHidden] = useState(false);
-  const [a, setA] = useState(0);
-  const [b, setB] = useState(0);
-  const [c, setC] = useState(0);
+
+ 
 
   const navigate = useNavigate();
 
@@ -46,12 +45,6 @@ export default function Profile() {
       .then((response) => {
         let allTask = response.data.data;
         setTask(allTask);
-
-        let n = allTask[0].length + allTask[1].length + allTask[2].length;
-
-        if (allTask[0].length != 0) setA((allTask[0].length * 100) / n);
-        if (allTask[1].length != 0) setB((allTask[1].length * 100) / n);
-        if (allTask[2].length != 0) setC((allTask[2].length * 100) / n);
       })
       .catch((error) => {
         console.log(error.message);
@@ -71,18 +64,6 @@ export default function Profile() {
     else setIsHidden(true);
   }
 
-  const statStyle1 = {
-    background: "#F1948A",
-    width: `${a}%`,
-  };
-  const statStyle2 = {
-    background: "#9286fd",
-    width: `${b}%`,
-  };
-  const statStyle3 = {
-    background: "#82E0AA",
-    width: `${c}%`,
-  };
 
   if (data)
     return (
@@ -107,16 +88,7 @@ export default function Profile() {
               </div>
               <div className="profileDetails">
                 <p>&nbsp;</p>
-                <p>987654320</p>
-              </div>
-              <div className="profileDetails">
-                <p>&nbsp;</p>
-                <div className="taskStat">
-                  <p>TaskStat</p>
-                  <div style={statStyle1}>&nbsp;</div>
-                  <div style={statStyle2}>&nbsp;</div>
-                  <div style={statStyle3}>&nbsp;</div>
-                </div>
+                <p>{data.mobile}</p>
               </div>
             </div>
           </>

@@ -3,7 +3,8 @@ const userModel = require("../model/userModel");
 exports.signup = async (req, res) => {
   try {
     const data = req.body;
-
+    // console.log(data, "data")
+    
     let exData = await userModel.findOne({ email: data.email });
     if (exData) {
       return res.status(200).send({
@@ -11,8 +12,10 @@ exports.signup = async (req, res) => {
         message: "This email is already in use !"
       });
     }
-
+    
+    
     let createdData = await userModel.create(data);
+    // console.log(createdData, "createdData")
 
     return res.status(201).send({
       status: true,
